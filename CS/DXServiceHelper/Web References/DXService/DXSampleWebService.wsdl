@@ -1,0 +1,482 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.devexpress.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://www.devexpress.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.devexpress.com/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="GetDataView">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="className" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="properties" type="tns:ArrayOfViewProperty" />
+            <s:element minOccurs="0" maxOccurs="1" name="filter" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfViewProperty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ViewProperty" nillable="true" type="tns:ViewProperty" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ViewProperty">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" default="None" name="Sorting" type="tns:SortDirection" />
+          <s:element minOccurs="0" maxOccurs="1" name="Property" type="tns:CriteriaOperator" />
+          <s:element minOccurs="0" maxOccurs="1" default="false" name="Group" type="s:boolean" />
+          <s:element minOccurs="0" maxOccurs="1" default="true" name="Fetch" type="s:boolean" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="SortDirection">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="Ascending" />
+          <s:enumeration value="Descending" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="CriteriaOperator" abstract="true" />
+      <s:complexType name="QueryOperand">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:attribute name="ColumnName" type="s:string" />
+            <s:attribute name="ColumnType" type="tns:DBColumnType" use="required" />
+            <s:attribute name="NodeAlias" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="DBColumnType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Unknown" />
+          <s:enumeration value="Boolean" />
+          <s:enumeration value="Byte" />
+          <s:enumeration value="SByte" />
+          <s:enumeration value="Char" />
+          <s:enumeration value="Decimal" />
+          <s:enumeration value="Double" />
+          <s:enumeration value="Single" />
+          <s:enumeration value="Int32" />
+          <s:enumeration value="UInt32" />
+          <s:enumeration value="Int16" />
+          <s:enumeration value="UInt16" />
+          <s:enumeration value="Int64" />
+          <s:enumeration value="UInt64" />
+          <s:enumeration value="String" />
+          <s:enumeration value="DateTime" />
+          <s:enumeration value="Guid" />
+          <s:enumeration value="TimeSpan" />
+          <s:enumeration value="ByteArray" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="FunctionOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Operands" type="tns:ArrayOfCriteriaOperator" />
+            </s:sequence>
+            <s:attribute name="OperatorType" type="tns:FunctionOperatorType" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ArrayOfCriteriaOperator">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CriteriaOperator" nillable="true" type="tns:CriteriaOperator" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="FunctionOperatorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="None" />
+          <s:enumeration value="Custom" />
+          <s:enumeration value="Iif" />
+          <s:enumeration value="IsNull" />
+          <s:enumeration value="IsNullOrEmpty" />
+          <s:enumeration value="Trim" />
+          <s:enumeration value="Len" />
+          <s:enumeration value="Substring" />
+          <s:enumeration value="Upper" />
+          <s:enumeration value="Lower" />
+          <s:enumeration value="Concat" />
+          <s:enumeration value="Ascii" />
+          <s:enumeration value="Char" />
+          <s:enumeration value="ToStr" />
+          <s:enumeration value="Replace" />
+          <s:enumeration value="Reverse" />
+          <s:enumeration value="Insert" />
+          <s:enumeration value="CharIndex" />
+          <s:enumeration value="Remove" />
+          <s:enumeration value="Abs" />
+          <s:enumeration value="Sqr" />
+          <s:enumeration value="Cos" />
+          <s:enumeration value="Sin" />
+          <s:enumeration value="Atn" />
+          <s:enumeration value="Exp" />
+          <s:enumeration value="Log" />
+          <s:enumeration value="Rnd" />
+          <s:enumeration value="Tan" />
+          <s:enumeration value="Power" />
+          <s:enumeration value="Sign" />
+          <s:enumeration value="Round" />
+          <s:enumeration value="Ceiling" />
+          <s:enumeration value="Floor" />
+          <s:enumeration value="Acos" />
+          <s:enumeration value="Asin" />
+          <s:enumeration value="Atn2" />
+          <s:enumeration value="BigMul" />
+          <s:enumeration value="Cosh" />
+          <s:enumeration value="Log10" />
+          <s:enumeration value="Sinh" />
+          <s:enumeration value="Tanh" />
+          <s:enumeration value="PadLeft" />
+          <s:enumeration value="PadRight" />
+          <s:enumeration value="LocalDateTimeThisYear" />
+          <s:enumeration value="LocalDateTimeThisMonth" />
+          <s:enumeration value="LocalDateTimeLastWeek" />
+          <s:enumeration value="LocalDateTimeThisWeek" />
+          <s:enumeration value="LocalDateTimeYesterday" />
+          <s:enumeration value="LocalDateTimeToday" />
+          <s:enumeration value="LocalDateTimeNow" />
+          <s:enumeration value="LocalDateTimeTomorrow" />
+          <s:enumeration value="LocalDateTimeDayAfterTomorrow" />
+          <s:enumeration value="LocalDateTimeNextWeek" />
+          <s:enumeration value="LocalDateTimeTwoWeeksAway" />
+          <s:enumeration value="LocalDateTimeNextMonth" />
+          <s:enumeration value="LocalDateTimeNextYear" />
+          <s:enumeration value="IsOutlookIntervalBeyondThisYear" />
+          <s:enumeration value="IsOutlookIntervalLaterThisYear" />
+          <s:enumeration value="IsOutlookIntervalLaterThisMonth" />
+          <s:enumeration value="IsOutlookIntervalNextWeek" />
+          <s:enumeration value="IsOutlookIntervalLaterThisWeek" />
+          <s:enumeration value="IsOutlookIntervalTomorrow" />
+          <s:enumeration value="IsOutlookIntervalToday" />
+          <s:enumeration value="IsOutlookIntervalYesterday" />
+          <s:enumeration value="IsOutlookIntervalEarlierThisWeek" />
+          <s:enumeration value="IsOutlookIntervalLastWeek" />
+          <s:enumeration value="IsOutlookIntervalEarlierThisMonth" />
+          <s:enumeration value="IsOutlookIntervalEarlierThisYear" />
+          <s:enumeration value="IsOutlookIntervalPriorThisYear" />
+          <s:enumeration value="GetDate" />
+          <s:enumeration value="GetMilliSecond" />
+          <s:enumeration value="GetSecond" />
+          <s:enumeration value="GetMinute" />
+          <s:enumeration value="GetHour" />
+          <s:enumeration value="GetDay" />
+          <s:enumeration value="GetMonth" />
+          <s:enumeration value="GetYear" />
+          <s:enumeration value="GetDayOfWeek" />
+          <s:enumeration value="GetDayOfYear" />
+          <s:enumeration value="GetTimeOfDay" />
+          <s:enumeration value="Now" />
+          <s:enumeration value="UtcNow" />
+          <s:enumeration value="Today" />
+          <s:enumeration value="AddTimeSpan" />
+          <s:enumeration value="AddTicks" />
+          <s:enumeration value="AddMilliSeconds" />
+          <s:enumeration value="AddSeconds" />
+          <s:enumeration value="AddMinutes" />
+          <s:enumeration value="AddHours" />
+          <s:enumeration value="AddDays" />
+          <s:enumeration value="AddMonths" />
+          <s:enumeration value="AddYears" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="JoinOperand">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Condition" type="tns:CriteriaOperator" />
+              <s:element minOccurs="0" maxOccurs="1" name="JoinTypeName" type="s:string" />
+              <s:element minOccurs="0" maxOccurs="1" name="AggregatedExpression" type="tns:CriteriaOperator" />
+              <s:element minOccurs="1" maxOccurs="1" name="AggregateType" type="tns:Aggregate" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="Aggregate">
+        <s:restriction base="s:string">
+          <s:enumeration value="Exists" />
+          <s:enumeration value="Count" />
+          <s:enumeration value="Max" />
+          <s:enumeration value="Min" />
+          <s:enumeration value="Avg" />
+          <s:enumeration value="Sum" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="OperandValue">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:choice minOccurs="1" maxOccurs="1">
+                <s:element minOccurs="0" maxOccurs="1" name="base64Binary" type="s:base64Binary" />
+                <s:element minOccurs="1" maxOccurs="1" name="decimal" type="s:decimal" />
+                <s:element minOccurs="1" maxOccurs="1" name="double" type="s:double" />
+                <s:element minOccurs="1" maxOccurs="1" name="float" type="s:float" />
+                <s:element minOccurs="1" maxOccurs="1" name="int" type="s:int" />
+                <s:element minOccurs="1" maxOccurs="1" name="unsignedInt" type="s:unsignedInt" />
+                <s:element minOccurs="1" maxOccurs="1" name="long" type="s:long" />
+                <s:element minOccurs="1" maxOccurs="1" name="unsignedLong" type="s:unsignedLong" />
+                <s:element minOccurs="1" maxOccurs="1" name="short" type="s:short" />
+                <s:element minOccurs="1" maxOccurs="1" name="unsignedShort" type="s:unsignedShort" />
+                <s:element minOccurs="1" maxOccurs="1" name="boolean" type="s:boolean" />
+                <s:element minOccurs="1" maxOccurs="1" name="byte" type="s:byte" />
+                <s:element minOccurs="1" maxOccurs="1" name="unsignedByte" type="s:unsignedByte" />
+                <s:element minOccurs="1" maxOccurs="1" name="char" type="s1:char" />
+                <s:element minOccurs="1" maxOccurs="1" name="guid" type="s1:guid" />
+                <s:element minOccurs="0" maxOccurs="1" name="string" type="s:string" />
+                <s:element minOccurs="1" maxOccurs="1" name="dateTime" type="s:dateTime" />
+                <s:element minOccurs="1" maxOccurs="1" name="TimeSpan" type="tns:TimeSpan" />
+                <s:element minOccurs="0" maxOccurs="1" name="DBNull" type="tns:DBNull" />
+              </s:choice>
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="TimeSpan" />
+      <s:complexType name="DBNull" />
+      <s:complexType name="ParameterValue">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:OperandValue">
+            <s:attribute name="Tag" type="s:int" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="GroupOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Operands" type="tns:ArrayOfCriteriaOperator" />
+            </s:sequence>
+            <s:attribute name="OperatorType" type="tns:GroupOperatorType" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="GroupOperatorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="And" />
+          <s:enumeration value="Or" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="InOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="LeftOperand" type="tns:CriteriaOperator" />
+              <s:element minOccurs="0" maxOccurs="1" name="Operands" type="tns:ArrayOfCriteriaOperator" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BinaryOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="LeftOperand" type="tns:CriteriaOperator" />
+              <s:element minOccurs="0" maxOccurs="1" name="RightOperand" type="tns:CriteriaOperator" />
+            </s:sequence>
+            <s:attribute name="OperatorType" type="tns:BinaryOperatorType" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="BinaryOperatorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Equal" />
+          <s:enumeration value="NotEqual" />
+          <s:enumeration value="Greater" />
+          <s:enumeration value="Less" />
+          <s:enumeration value="LessOrEqual" />
+          <s:enumeration value="GreaterOrEqual" />
+          <s:enumeration value="Like" />
+          <s:enumeration value="BitwiseAnd" />
+          <s:enumeration value="BitwiseOr" />
+          <s:enumeration value="BitwiseXor" />
+          <s:enumeration value="Divide" />
+          <s:enumeration value="Modulo" />
+          <s:enumeration value="Multiply" />
+          <s:enumeration value="Plus" />
+          <s:enumeration value="Minus" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="UnaryOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Operand" type="tns:CriteriaOperator" />
+            </s:sequence>
+            <s:attribute name="OperatorType" type="tns:UnaryOperatorType" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:simpleType name="UnaryOperatorType">
+        <s:restriction base="s:string">
+          <s:enumeration value="BitwiseNot" />
+          <s:enumeration value="Plus" />
+          <s:enumeration value="Minus" />
+          <s:enumeration value="Not" />
+          <s:enumeration value="IsNull" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="NullOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:UnaryOperator" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="NotOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:UnaryOperator" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="QuerySubQueryContainer">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Node" type="tns:BaseStatement" />
+              <s:element minOccurs="0" maxOccurs="1" name="AggregateProperty" type="tns:CriteriaOperator" />
+            </s:sequence>
+            <s:attribute name="AggregateType" type="tns:Aggregate" use="required" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BaseStatement" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:JoinNode">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Operands" type="tns:ArrayOfChoice1" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="JoinNode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="SubNodes" type="tns:ArrayOfJoinNode" />
+          <s:element minOccurs="0" maxOccurs="1" name="Condition" type="tns:CriteriaOperator" />
+        </s:sequence>
+        <s:attribute name="Alias" type="s:string" />
+        <s:attribute default="Inner" name="Type" type="tns:JoinType" />
+        <s:attribute name="TableName" type="s:string" />
+      </s:complexType>
+      <s:complexType name="ArrayOfJoinNode">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="JoinNode" nillable="true" type="tns:JoinNode" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="JoinType">
+        <s:restriction base="s:string">
+          <s:enumeration value="Inner" />
+          <s:enumeration value="LeftOuter" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfChoice1">
+        <s:choice minOccurs="0" maxOccurs="unbounded">
+          <s:element minOccurs="1" maxOccurs="1" name="OperandProperty" nillable="true" type="tns:OperandProperty" />
+          <s:element minOccurs="1" maxOccurs="1" name="BetweenOperator" nillable="true" type="tns:BetweenOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="InOperator" nillable="true" type="tns:InOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="NullOperator" nillable="true" type="tns:NullOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="AggregateOperand" nillable="true" type="tns:AggregateOperand" />
+          <s:element minOccurs="1" maxOccurs="1" name="FunctionOperator" nillable="true" type="tns:FunctionOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="BinaryOperator" nillable="true" type="tns:BinaryOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="QuerySubQueryContainer" nillable="true" type="tns:QuerySubQueryContainer" />
+          <s:element minOccurs="1" maxOccurs="1" name="NotOperator" nillable="true" type="tns:NotOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="ContainsOperator" nillable="true" type="tns:ContainsOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="UnaryOperator" nillable="true" type="tns:UnaryOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="QueryOperand" nillable="true" type="tns:QueryOperand" />
+          <s:element minOccurs="1" maxOccurs="1" name="GroupOperator" nillable="true" type="tns:GroupOperator" />
+          <s:element minOccurs="1" maxOccurs="1" name="OperandValue" nillable="true" type="tns:OperandValue" />
+          <s:element minOccurs="1" maxOccurs="1" name="JoinOperand" nillable="true" type="tns:JoinOperand" />
+        </s:choice>
+      </s:complexType>
+      <s:complexType name="OperandProperty">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:attribute name="PropertyName" type="s:string" />
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="BetweenOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="BeginExpression" type="tns:CriteriaOperator" />
+              <s:element minOccurs="0" maxOccurs="1" name="EndExpression" type="tns:CriteriaOperator" />
+              <s:element minOccurs="0" maxOccurs="1" name="TestExpression" type="tns:CriteriaOperator" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="AggregateOperand">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:CriteriaOperator">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="1" name="Condition" type="tns:CriteriaOperator" />
+              <s:element minOccurs="0" maxOccurs="1" name="CollectionProperty" type="tns:OperandProperty" />
+              <s:element minOccurs="0" maxOccurs="1" name="AggregatedExpression" type="tns:CriteriaOperator" />
+              <s:element minOccurs="1" maxOccurs="1" name="AggregateType" type="tns:Aggregate" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="ContainsOperator">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:AggregateOperand" />
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="GetDataViewResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDataViewResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+      <s:simpleType name="guid">
+        <s:restriction base="s:string">
+          <s:pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}" />
+        </s:restriction>
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetDataViewSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDataView" />
+  </wsdl:message>
+  <wsdl:message name="GetDataViewSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDataViewResponse" />
+  </wsdl:message>
+  <wsdl:portType name="DXSampleWebServiceSoap">
+    <wsdl:operation name="GetDataView">
+      <wsdl:input message="tns:GetDataViewSoapIn" />
+      <wsdl:output message="tns:GetDataViewSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DXSampleWebServiceSoap" type="tns:DXSampleWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetDataView">
+      <soap:operation soapAction="http://www.devexpress.com/GetDataView" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="DXSampleWebServiceSoap12" type="tns:DXSampleWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetDataView">
+      <soap12:operation soapAction="http://www.devexpress.com/GetDataView" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DXSampleWebService">
+    <wsdl:port name="DXSampleWebServiceSoap" binding="tns:DXSampleWebServiceSoap">
+      <soap:address location="http://localhost:1031/DXSampleWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="DXSampleWebServiceSoap12" binding="tns:DXSampleWebServiceSoap12">
+      <soap12:address location="http://localhost:1031/DXSampleWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

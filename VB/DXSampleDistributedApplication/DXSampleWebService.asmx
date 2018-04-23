@@ -1,0 +1,1 @@
+﻿<%@ WebService Language="vb" CodeBehind="DXSampleWebService.asmx.vb" Class="DXSample.Service.DXSampleWebService" %>
