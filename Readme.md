@@ -8,10 +8,10 @@
 * [DXServiceReferenceExtensions.cs](./CS/DXServiceHelper/DXServiceReferenceExtensions.cs) (VB: [DXServiceReferenceExtensions.vb](./VB/DXServiceHelper/DXServiceReferenceExtensions.vb))
 * [Helper.cs](./CS/DXServiceHelper/Helper.cs) (VB: [Helper.vb](./VB/DXServiceHelper/Helper.vb))
 * [Reference.cs](./CS/DXServiceHelper/Web References/DXService/Reference.cs) (VB: [Reference.vb](./VB/DXServiceHelper/Web References/DXService/Reference.vb))
-* [CategoriesProducts.aspx](./CS/SimpleWebClient/CategoriesProducts.aspx) (VB: [CategoriesProducts.aspx.vb](./VB/SimpleWebClient/CategoriesProducts.aspx.vb))
+* [CategoriesProducts.aspx](./CS/SimpleWebClient/CategoriesProducts.aspx) (VB: [CategoriesProducts.aspx](./VB/SimpleWebClient/CategoriesProducts.aspx))
 * [CategoriesProducts.aspx.cs](./CS/SimpleWebClient/CategoriesProducts.aspx.cs) (VB: [CategoriesProducts.aspx.vb](./VB/SimpleWebClient/CategoriesProducts.aspx.vb))
 * [Summaries.aspx](./CS/SimpleWebClient/Summaries.aspx) (VB: [Summaries.aspx](./VB/SimpleWebClient/Summaries.aspx))
-* [Summaries.aspx.cs](./CS/SimpleWebClient/Summaries.aspx.cs) (VB: [Summaries.aspx](./VB/SimpleWebClient/Summaries.aspx))
+* [Summaries.aspx.cs](./CS/SimpleWebClient/Summaries.aspx.cs) (VB: [Summaries.aspx.vb](./VB/SimpleWebClient/Summaries.aspx.vb))
 <!-- default file list end -->
 # Another way to implement a Web Service using XPO and DevExpress Data Library
 
